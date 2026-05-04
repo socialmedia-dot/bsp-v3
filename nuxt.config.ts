@@ -172,7 +172,12 @@ export default defineNuxtConfig({
         '/BSP/settings/website',
         '/BSP/settings/website/',
         '/BSP/settings/staff',
-        '/BSP/settings/staff/'
+        '/BSP/settings/staff/',
+        // News articles
+        '/news/uk-school-admissions-2026',
+        '/news/boarding-school-life-guide',
+        '/news/scholarship-opportunities-2026',
+        '/news/uk-education-rankings'
       ]
     }
   }

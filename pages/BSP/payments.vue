@@ -145,6 +145,7 @@
             <thead>
               <tr>
                 <th class="th-user">Member</th>
+                <th class="th-code">User Code</th>
                 <th class="th-type">Type</th>
                 <th class="th-invoice">Invoice #</th>
                 <th class="th-amount">Amount</th>
@@ -163,6 +164,9 @@
                       <span class="member-email">{{ payment.email }}</span>
                     </div>
                   </div>
+                </td>
+                <td class="td-code">
+                  <span class="code-badge">{{ payment.userCode }}</span>
                 </td>
                 <td class="td-type">
                   <span class="type-badge" :class="'type-' + payment.userType">{{ payment.userType }}</span>
@@ -187,7 +191,7 @@
                 </td>
               </tr>
               <tr v-if="paginatedPayments.length === 0">
-                <td colspan="8" class="empty-state">
+                <td colspan="9" class="empty-state">
                   <div class="empty-content">
                     <span class="empty-icon">💳</span>
                     <p>No payment records found</p>
@@ -263,6 +267,10 @@
                 <span class="info-value">
                   <span class="type-badge" :class="'type-' + selectedPayment.userType">{{ selectedPayment.userType }}</span>
                 </span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">User Code</span>
+                <span class="info-value code-value">{{ selectedPayment.userCode }}</span>
               </div>
             </div>
           </div>

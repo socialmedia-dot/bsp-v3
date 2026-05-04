@@ -86,6 +86,33 @@
       </div>
     </div>
     
+    <!-- Latest News -->
+    <div style="margin-top: 3rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h2 style="font-size: 1.5rem; margin: 0;">📰 Latest News</h2>
+        <NuxtLink to="/news" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">
+          View All →
+        </NuxtLink>
+      </div>
+      <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+        <NuxtLink v-for="news in latestNews" :key="news.slug" :to="`/news/${news.slug}`" class="card" style="text-decoration: none; color: inherit;">
+          <div class="card-image" style="font-size: 3rem; display: flex; align-items: center; justify-content: center;">
+            {{ news.emoji }}
+          </div>
+          <div class="card-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+              <span style="background: #fef3c7; color: #92400e; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600;">
+                {{ news.category }}
+              </span>
+              <span style="color: #94a3b8; font-size: 0.75rem;">{{ news.date }}</span>
+            </div>
+            <h3 class="card-title" style="font-size: 1.1rem; margin-bottom: 0.5rem;">{{ news.title }}</h3>
+            <p style="color: #64748b; font-size: 0.875rem; line-height: 1.5; margin: 0;">{{ news.excerpt }}</p>
+          </div>
+        </NuxtLink>
+      </div>
+    </div>
+    
     <!-- CTA -->
     <div style="background: linear-gradient(135deg, var(--bsp-primary) 0%, var(--bsp-secondary) 100%); color: white; padding: 3rem; border-radius: 1rem; margin-top: 3rem; text-align: center;">
       <h2 style="margin-bottom: 1rem;">Ready to Apply?</h2>
@@ -144,6 +171,41 @@ const schools = ref([
     ageRange: 'Ages 7-18',
     exams: 'GCSE, A-Level, Pre-U, IB',
     fee: 'From £18,600/term'
+  }
+])
+
+const latestNews = ref([
+  {
+    slug: 'uk-school-admissions-2026',
+    title: 'UK School Admissions Open for 2026 Entry',
+    excerpt: 'Top independent schools across the UK have opened their admission windows for the 2026 academic year.',
+    date: '2026-01-15',
+    category: 'Admissions',
+    emoji: '🎓'
+  },
+  {
+    slug: 'boarding-school-life-guide',
+    title: "A Parent's Guide to Boarding School Life",
+    excerpt: 'Everything you need to know about preparing your child for boarding school life.',
+    date: '2026-02-20',
+    category: 'Guide',
+    emoji: '🏢'
+  },
+  {
+    slug: 'scholarship-opportunities-2026',
+    title: 'New Scholarship Opportunities for International Students',
+    excerpt: 'Record number of scholarships available this year for international students.',
+    date: '2026-03-10',
+    category: 'Scholarships',
+    emoji: '🏆'
+  },
+  {
+    slug: 'uk-education-rankings',
+    title: 'UK Education Rankings 2026: The Top Performers',
+    excerpt: 'The latest league tables are out. See which schools top the rankings.',
+    date: '2026-04-05',
+    category: 'Rankings',
+    emoji: '📊'
   }
 ])
 
