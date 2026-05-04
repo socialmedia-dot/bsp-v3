@@ -67,7 +67,7 @@
         <!-- Page Header -->
         <div class="page-header">
           <div class="page-title-area">
-            <h1 class="page-title">💳 Payment Management</h1>
+            <h1 class="page-title">💳 Payment Management TEST</h1>
             <p class="page-subtitle">View and manage all member payment records</p>
           </div>
           <div class="page-actions">
@@ -151,7 +151,7 @@
                 <th class="th-amount">Amount</th>
                 <th class="th-period">Period</th>
                 <th class="th-status">Status</th>
-                <th class="th-date">Date</th>
+                <th class="th-date">Due Date</th>
                 <th class="th-actions">Actions</th>
               </tr>
             </thead>
@@ -181,7 +181,12 @@
                 <td class="td-status">
                   <span class="status-badge" :class="'status-' + payment.status">{{ payment.status }}</span>
                 </td>
-                <td class="td-date">{{ payment.date }}</td>
+                <td class="td-date">
+                  <div class="due-date-cell">
+                    <span class="due-date">{{ payment.membershipExpire || '—' }}</span>
+                    <span v-if="payment.status === 'paid' && payment.date" class="paid-on">· Paid {{ payment.date }}</span>
+                  </div>
+                </td>
                 <td class="td-actions">
                   <div class="action-buttons">
                     <button type="button" class="btn-action btn-view" @click="viewPayment(payment.id)" title="View Details">👁️</button>
@@ -248,6 +253,10 @@
               <div class="info-item">
                 <span class="info-label">Payment Date</span>
                 <span class="info-value">{{ selectedPayment.date || '—' }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Membership Expire</span>
+                <span class="info-value" :class="'expire-' + getExpireStatus(selectedPayment.membershipExpire)">{{ selectedPayment.membershipExpire }}</span>
               </div>
             </div>
           </div>
@@ -359,20 +368,32 @@ const clearSearch = () => {
   currentPage.value = 1
 }
 
+// Helper: get expiry status
+const getExpireStatus = (dateStr: string): string => {
+  if (!dateStr || dateStr === '—') return 'ok'
+  const now = new Date()
+  const expire = new Date(dateStr)
+  const days = Math.ceil((expire.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
+  if (days < 0) return 'expired'
+  if (days <= 7) return 'critical'
+  if (days <= 30) return 'warning'
+  return 'ok'
+}
+
 // Mock payment data
 const payments = ref([
-  { id: 1, name: "St. Mary's School", email: 'admin@stmarys.edu.uk', userCode: '2026011500001', userType: 'school', invoiceNo: 'INV-2026-001', amount: 299, period: '2026 Annual', status: 'paid', date: '2026-01-15' },
-  { id: 2, name: 'Brighton College', email: 'admissions@brightoncollege.edu.uk', userCode: '2026022000001', userType: 'school', invoiceNo: 'INV-2026-002', amount: 299, period: '2026 Annual', status: 'paid', date: '2026-02-20' },
-  { id: 3, name: 'Victoria Education Group', email: 'victoria@vedu.com.hk', userCode: '2026011000001', userType: 'consultant', invoiceNo: 'INV-2026-003', amount: 199, period: '2026 Annual', status: 'pending', date: '—' },
-  { id: 4, name: 'UK Study Link', email: 'james@ukstudylink.com', userCode: '2026022500001', userType: 'consultant', invoiceNo: 'INV-2026-004', amount: 199, period: '2026 Annual', status: 'pending', date: '—' },
-  { id: 5, name: 'Mr. Alan Foster', email: 'alan@ukboarding.com', userCode: 'P2026030100001', userType: 'personal', invoiceNo: 'INV-2026-005', amount: 99, period: '2026 Annual', status: 'overdue', date: '—' },
-  { id: 6, name: 'Elite Education Consultancy', email: 'sarah@eliteedu.hk', userCode: '2026031200001', userType: 'consultant', invoiceNo: 'INV-2026-006', amount: 199, period: '2026 Annual', status: 'paid', date: '2026-03-12' },
-  { id: 7, name: 'Global Study Partners', email: 'emma@globalstudy.hk', userCode: '2026041500001', userType: 'consultant', invoiceNo: 'INV-2026-007', amount: 199, period: '2026 Annual', status: 'pending', date: '—' },
-  { id: 8, name: 'Harrow School', email: 'harrow@harrowschool.org.uk', userCode: '2025060100001', userType: 'school', invoiceNo: 'INV-2026-008', amount: 299, period: '2026 Annual', status: 'paid', date: '2026-03-01' },
-  { id: 9, name: 'Eton College', email: 'admissions@etoncollege.org.uk', userCode: '2026041800001', userType: 'school', invoiceNo: 'INV-2026-009', amount: 299, period: '2026 Annual', status: 'overdue', date: '—' },
-  { id: 10, name: 'British Education HK', email: 'david@briteduhk.com', userCode: '2026040500001', userType: 'consultant', invoiceNo: 'INV-2026-010', amount: 199, period: '2026 Annual', status: 'paid', date: '2026-04-05' },
-  { id: 11, name: "King's College School", email: 'info@kcs.org.uk', userCode: '2026031000001', userType: 'school', invoiceNo: 'INV-2026-011', amount: 299, period: '2026 Annual', status: 'pending', date: '—' },
-  { id: 12, name: "Cheltenham Ladies' College", email: 'registry@cheltenhamcollege.org', userCode: '2026031500001', userType: 'school', invoiceNo: 'INV-2026-012', amount: 299, period: '2026 Annual', status: 'paid', date: '2026-04-10' }
+  { id: 1, name: "St. Mary's School", email: 'finance@stmarys.edu.uk', userType: 'school', invoiceNo: 'INV-2026-001', amount: 299, period: '2026 Annual', status: 'paid', date: '2026-01-15', membershipExpire: '2026-07-15' },
+  { id: 2, name: 'Brighton College', email: 'admissions@brightoncollege.edu.uk', userType: 'school', invoiceNo: 'INV-2026-002', amount: 299, period: '2026 Annual', status: 'paid', date: '2026-02-20', membershipExpire: '2026-08-20' },
+  { id: 3, name: 'Victoria Education Group', email: 'victoria@vedu.com.hk', userType: 'consultant', invoiceNo: 'INV-2026-003', amount: 199, period: '2026 Annual', status: 'pending', date: '—', membershipExpire: '2026-12-31' },
+  { id: 4, name: 'UK Study Link', email: 'james@ukstudylink.com', userType: 'consultant', invoiceNo: 'INV-2026-004', amount: 199, period: '2026 Annual', status: 'pending', date: '—', membershipExpire: '2026-12-31' },
+  { id: 5, name: 'Mr. Alan Foster', email: 'alan@ukboarding.com', userType: 'personal', invoiceNo: 'INV-2026-005', amount: 99, period: '2026 Annual', status: 'overdue', date: '—', membershipExpire: '2026-12-31' },
+  { id: 6, name: 'Elite Education Consultancy', email: 'sarah@eliteedu.hk', userType: 'consultant', invoiceNo: 'INV-2026-006', amount: 199, period: '2026 Annual', status: 'paid', date: '2026-03-12', membershipExpire: '2026-12-31' },
+  { id: 7, name: 'Global Study Partners', email: 'emma@globalstudy.hk', userType: 'consultant', invoiceNo: 'INV-2026-007', amount: 199, period: '2026 Annual', status: 'pending', date: '—', membershipExpire: '2026-12-31' },
+  { id: 8, name: 'Harrow School', email: 'harrow@harrowschool.org.uk', userType: 'school', invoiceNo: 'INV-2026-008', amount: 299, period: '2026 Annual', status: 'paid', date: '2026-03-01', membershipExpire: '2025-06-01' },
+  { id: 9, name: 'Eton College', email: 'admissions@etoncollege.org.uk', userType: 'school', invoiceNo: 'INV-2026-009', amount: 299, period: '2026 Annual', status: 'overdue', date: '—', membershipExpire: '2026-04-26' },
+  { id: 10, name: 'British Education HK', email: 'david@briteduhk.com', userType: 'consultant', invoiceNo: 'INV-2026-010', amount: 199, period: '2026 Annual', status: 'paid', date: '2026-04-05', membershipExpire: '2026-12-31' },
+  { id: 11, name: 'Wellington College', email: 'info@wellingtoncollege.org.uk', userType: 'school', invoiceNo: 'INV-2026-011', amount: 299, period: '2026 Annual', status: 'pending', date: '—', membershipExpire: '2026-12-31' },
+  { id: 12, name: "St. Paul's School", email: 'admissions@stpaulsschool.org.uk', userType: 'school', invoiceNo: 'INV-2026-012', amount: 299, period: '2026 Annual', status: 'paid', date: '2026-04-10', membershipExpire: '2026-12-31' }
 ])
 
 // Computed stats
