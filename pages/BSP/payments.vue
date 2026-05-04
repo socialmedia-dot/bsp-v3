@@ -292,7 +292,10 @@
     <div v-if="showPanel && selectedPayment" class="detail-panel-overlay" @click.self="closePanel">
       <div class="detail-panel">
         <div class="panel-header">
-          <h2 class="panel-title">Payment Details</h2>
+          <div>
+            <h2 class="panel-title">Payment Details</h2>
+            <p v-if="selectedPayment" class="panel-subtitle">{{ selectedPayment.userName }} — {{ selectedPayment.userEmail }}</p>
+          </div>
           <button class="panel-close" @click="closePanel">×</button>
         </div>
         <div class="panel-body">
@@ -1364,6 +1367,12 @@ watch(activeTab, () => {
   font-size: 1.125rem;
   font-weight: 600;
   color: var(--bsp-dark, #1e293b);
+}
+
+.panel-subtitle {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-top: 0.25rem;
 }
 
 .panel-close {
