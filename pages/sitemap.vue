@@ -48,7 +48,7 @@
           <li><NuxtLink to="/BSP/dashboard">BSP Dashboard</NuxtLink></li>
           <li><NuxtLink to="/BSP/users/personal">Personal Users</NuxtLink></li>
           <li><NuxtLink to="/BSP/users/school">School Users</NuxtLink></li>
-          <li><NuxtLink to="/BSP/users/agent">Agent Users</NuxtLink></li>
+          <li><NuxtLink to="/BSP/users/consultant">Consultant Users</NuxtLink></li>
           <li><NuxtLink to="/BSP/users/bspstaff">BSP Staff</NuxtLink></li>
           <li><NuxtLink to="/BSP/new-account-applications">New Account Applications</NuxtLink></li>
         </ul>

@@ -28,7 +28,7 @@
 | 版本 | URL | 內容 |
 |------|-----|------|
 | 162c2f01 | https://162c2f01.bsp-v3.pages.dev/BSP/users/bspstaff | BSP Staff Users 管理頁面（overflow 修復） |
-| f9afcdf5 | https://f9afcdf5.bsp-v3.pages.dev/BSP/users/agent | Agent Users 管理頁面 |
+| f9afcdf5 | https://f9afcdf5.bsp-v3.pages.dev/BSP/users/consultant | Consultant Users 管理頁面 |
 
 ### 2026-04-22
 
