@@ -204,10 +204,36 @@
                     <button class="btn-action btn-view" @click="viewPayment(payment.id)" title="View Details">
                       👁️
                     </button>
-                    <button class="btn-action btn-download" @click="downloadInvoice(payment.invoiceNumber)" title="Download Invoice">
+                    <button 
+                      v-if="payment.status === 'pending'" 
+                      class="btn-action btn-approve" 
+                      @click="openApproveModal(payment)" 
+                      title="Approve Payment"
+                    >
+                      ✅
+                    </button>
+                    <button 
+                      v-if="payment.status === 'pending'" 
+                      class="btn-action btn-reject" 
+                      @click="openRejectModal(payment)" 
+                      title="Reject Payment"
+                    >
+                      ❌
+                    </button>
+                    <button 
+                      v-if="payment.status !== 'pending'" 
+                      class="btn-action btn-download" 
+                      @click="downloadInvoice(payment.invoiceNumber)" 
+                      title="Download Invoice"
+                    >
                       📥
                     </button>
-                    <button v-if="payment.status === 'completed'" class="btn-action btn-refund" @click="openRefundModal(payment)" title="Refund">
+                    <button 
+                      v-if="payment.status === 'completed'" 
+                      class="btn-action btn-refund" 
+                      @click="openRefundModal(payment)" 
+                      title="Refund"
+                    >
                       ↩️
                     </button>
                   </div>
@@ -349,6 +375,53 @@
         </div>
       </div>
     </div>
+    <!-- Approve Modal -->
+    <div v-if="approveModal" class="modal-overlay" @click.self="closeApproveModal">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h2 class="modal-title">Approve Payment</h2>
+          <button class="modal-close" @click="closeApproveModal">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="refund-summary" v-if="approvePaymentItem">
+            <p>Approve payment for <strong>{{ approvePaymentItem.userName }}</strong></p>
+            <p class="refund-amount">£{{ approvePaymentItem.amount.toFixed(2) }}</p>
+            <p style="margin-top: 0.5rem; color: #64748b; font-size: 0.875rem;">
+              Invoice: {{ approvePaymentItem.invoiceNumber }} | Method: {{ formatMethod(approvePaymentItem.method) }}
+            </p>
+          </div>
+          <p style="color: #374151; font-size: 0.9rem;">Are you sure you want to mark this payment as completed?</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" @click="closeApproveModal">Cancel</button>
+          <button class="btn btn-primary" @click="processApprove">Confirm Approve</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reject Modal -->
+    <div v-if="rejectModal" class="modal-overlay" @click.self="closeRejectModal">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h2 class="modal-title">Reject Payment</h2>
+          <button class="modal-close" @click="closeRejectModal">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="refund-summary" v-if="rejectPaymentItem">
+            <p>Reject payment for <strong>{{ rejectPaymentItem.userName }}</strong></p>
+            <p class="refund-amount">£{{ rejectPaymentItem.amount.toFixed(2) }}</p>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Rejection Reason <span class="required">*</span></label>
+            <textarea v-model="rejectReason" class="form-textarea" rows="3" placeholder="Enter reason for rejection..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" @click="closeRejectModal">Cancel</button>
+          <button class="btn btn-danger" @click="processReject">Confirm Reject</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -390,6 +463,11 @@ const refundModal = ref(false)
 const refundPayment = ref<any>(null)
 const refundReason = ref('')
 const refundAmount = ref(0)
+const approveModal = ref(false)
+const approvePaymentItem = ref<any>(null)
+const rejectModal = ref(false)
+const rejectPaymentItem = ref<any>(null)
+const rejectReason = ref('')
 
 // Debounce search
 let searchTimeout: ReturnType<typeof setTimeout> | null = null
@@ -520,6 +598,48 @@ const processRefund = () => {
   }
   closeRefundModal()
   alert('Refund processed successfully')
+}
+
+const openApproveModal = (payment: any) => {
+  approvePaymentItem.value = payment
+  approveModal.value = true
+}
+
+const closeApproveModal = () => {
+  approveModal.value = false
+  approvePaymentItem.value = null
+}
+
+const processApprove = () => {
+  if (!approvePaymentItem.value) return
+  const payment = payments.value.find(p => p.id === approvePaymentItem.value.id)
+  if (payment) {
+    payment.status = 'completed'
+  }
+  closeApproveModal()
+  alert('Payment approved successfully')
+}
+
+const openRejectModal = (payment: any) => {
+  rejectPaymentItem.value = payment
+  rejectReason.value = ''
+  rejectModal.value = true
+}
+
+const closeRejectModal = () => {
+  rejectModal.value = false
+  rejectPaymentItem.value = null
+  rejectReason.value = ''
+}
+
+const processReject = () => {
+  if (!rejectPaymentItem.value || !rejectReason.value) return
+  const payment = payments.value.find(p => p.id === rejectPaymentItem.value.id)
+  if (payment) {
+    payment.status = 'refunded'
+  }
+  closeRejectModal()
+  alert('Payment rejected')
 }
 
 const exportPayments = () => {
@@ -967,6 +1087,12 @@ watch(activeTab, () => {
 }
 
 .btn-action:hover { background: #f1f5f9; }
+
+.btn-approve:hover { background: #dcfce7; border-color: #86efac; }
+
+.btn-reject:hover { background: #fee2e2; border-color: #fca5a5; }
+
+.btn-refund:hover { background: #fee2e2; border-color: #fca5a5; }
 
 /* Empty State */
 .empty-state {
