@@ -161,9 +161,12 @@
                   <div class="user-info-cell">
                     <div class="user-details">
                       <span class="member-name">{{ payment.name }}</span>
-                      <span class="member-email">{{ payment.email }} · ID: {{ payment.userCode }}</span>
+                      <span class="member-email">{{ payment.email }}</span>
                     </div>
                   </div>
+                </td>
+                <td class="td-code">
+                  <span class="user-code">{{ payment.userCode }}</span>
                 </td>
                 <td class="td-type">
                   <span class="type-badge" :class="'type-' + payment.userType">{{ payment.userType }}</span>
@@ -834,11 +837,11 @@ watch(filterType, () => { currentPage.value = 1 })
   border-bottom: 1px solid #e2e8f0;
 }
 
-.th-type, .th-invoice, .th-amount, .th-period, .th-status, .th-date, .th-actions {
+.th-type, .th-code, .th-invoice, .th-amount, .th-period, .th-status, .th-date, .th-actions {
   text-align: center !important;
 }
 
-.td-type, .td-invoice, .td-amount, .td-period, .td-status, .td-date {
+.td-type, .td-code, .td-invoice, .td-amount, .td-period, .td-status, .td-date {
   text-align: center !important;
   padding: 1rem;
   border-bottom: 1px solid #f1f5f9;
