@@ -434,8 +434,9 @@ setMeta({
   type: 'website'
 })
 
-// Mock payments data
+// Mock payments data — cross-year history
 const payments = ref([
+  // 2026
   { id: 'pi_3O9xK2L9d2fG4hJk', userName: 'Westminster Academy', userEmail: 'finance@westminster.edu', userType: 'school', amount: 2500.00, date: '2026-04-28', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2026-001' },
   { id: 'pi_4P0yL3M0e3gH5iKl', userName: 'Sarah Chen', userEmail: 'sarah@chen-consulting.com', userType: 'consultant', amount: 299.00, date: '2026-04-27', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2026-002' },
   { id: 'pi_5Q1zM4N1f4hI6jLm', userName: 'Greenwich School', userEmail: 'accounts@greenwich.edu.hk', userType: 'school', amount: 2500.00, date: '2026-04-26', method: 'bank_transfer', status: 'pending', invoiceNumber: 'INV-2026-003' },
@@ -448,6 +449,48 @@ const payments = ref([
   { id: 'pi_2X8gT1U8m1oP3qSt', userName: 'Global Study Partners', userEmail: 'accounts@globalstudy.hk', userType: 'business', amount: 1200.00, date: '2026-04-19', method: 'stripe', status: 'pending', invoiceNumber: 'INV-2026-010' },
   { id: 'pi_3Y9hU2V9n2pQ4rTu', userName: 'Crown Education', userEmail: 'finance@crownedu.com', userType: 'school', amount: 2500.00, date: '2026-04-18', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2026-011' },
   { id: 'pi_4Z0iV3W0o3qR5sUv', userName: 'James Wong', userEmail: 'james@wong-consulting.sg', userType: 'consultant', amount: 299.00, date: '2026-04-17', method: 'cheque', status: 'completed', invoiceNumber: 'INV-2026-012' },
+  { id: 'pi_5A1jW4X1p4rS6tVw', userName: 'Oxford College', userEmail: 'accounts@oxford.edu', userType: 'school', amount: 2500.00, date: '2026-03-15', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2026-013' },
+  { id: 'pi_6B2kX5Y2q5sT7uWx', userName: 'Lisa Park', userEmail: 'lisa@park-edu.kr', userType: 'consultant', amount: 299.00, date: '2026-02-10', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2026-014' },
+  { id: 'pi_7C3lZ6Z3r6uU8vXy', userName: 'Cambridge Academy', userEmail: 'finance@cambridge.edu', userType: 'school', amount: 2500.00, date: '2026-01-20', method: 'bank_transfer', status: 'completed', invoiceNumber: 'INV-2026-015' },
+  { id: 'pi_8D4mA7A4s7vV9wYz', userName: 'Elite Consulting Ltd', userEmail: 'accounts@eliteconsulting.com', userType: 'business', amount: 1200.00, date: '2026-01-05', method: 'cheque', status: 'completed', invoiceNumber: 'INV-2026-016' },
+  // 2025
+  { id: 'pi_9E5nB8B5t8wX0xZa', userName: 'Wellington College', userEmail: 'bursar@wellington.edu', userType: 'school', amount: 2500.00, date: '2025-12-18', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2025-089' },
+  { id: 'pi_0F6oC9C6u9xY1yAb', userName: 'David Kim', userEmail: 'david@kim-consulting.kr', userType: 'consultant', amount: 299.00, date: '2025-11-22', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2025-088' },
+  { id: 'pi_1G7pD0D7v0zZ2zBc', userName: 'St Paul\'s School', userEmail: 'accounts@stpauls.edu', userType: 'school', amount: 2500.00, date: '2025-10-05', method: 'bank_transfer', status: 'completed', invoiceNumber: 'INV-2025-087' },
+  { id: 'pi_2H8qE1E8w1aA3aCd', userName: 'Rachel Green', userEmail: 'rachel@green-edu.com', userType: 'personal', amount: 99.00, date: '2025-09-14', method: 'stripe', status: 'refunded', invoiceNumber: 'INV-2025-086' },
+  { id: 'pi_3I9rF2F9x2bB4bDe', userName: 'Asia Pacific Schools', userEmail: 'finance@apacs.edu.my', userType: 'school', amount: 2500.00, date: '2025-08-30', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2025-085' },
+  { id: 'pi_4J0sG3G0y3cC5cEf', userName: 'Robert Lee', userEmail: 'robert@lee-consulting.sg', userType: 'consultant', amount: 299.00, date: '2025-07-12', method: 'cheque', status: 'completed', invoiceNumber: 'INV-2025-084' },
+  { id: 'pi_5K1tH4H1z4dD6dFg', userName: 'King\'s College', userEmail: 'accounts@kings.edu', userType: 'school', amount: 2500.00, date: '2025-06-25', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2025-083' },
+  { id: 'pi_6L2uI5I2a5eE7eGh', userName: 'Global Edu Partners', userEmail: 'accounts@globaledu.com', userType: 'business', amount: 1200.00, date: '2025-05-08', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2025-082' },
+  { id: 'pi_7M3vJ6J3b6fF8fHi', userName: 'Brighton School', userEmail: 'finance@brighton.edu', userType: 'school', amount: 2500.00, date: '2025-04-15', method: 'bank_transfer', status: 'completed', invoiceNumber: 'INV-2025-081' },
+  { id: 'pi_8N4wK7K4c7gG9gIj', userName: 'Anna White', userEmail: 'anna@white-edu.co.uk', userType: 'consultant', amount: 299.00, date: '2025-03-20', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2025-080' },
+  { id: 'pi_9O5xL8L5d8hH0hJk', userName: 'Royal Grammar School', userEmail: 'bursar@rgs.edu', userType: 'school', amount: 2500.00, date: '2025-02-14', method: 'cheque', status: 'completed', invoiceNumber: 'INV-2025-079' },
+  { id: 'pi_0P6yM9M6e9iI1iLl', userName: 'Tom Harrison', userEmail: 'tom@harrison-edu.com', userType: 'personal', amount: 99.00, date: '2025-01-10', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2025-078' },
+  // 2024
+  { id: 'pi_1Q7zN0N7f0jJ2jMm', userName: 'Eton College', userEmail: 'accounts@eton.edu', userType: 'school', amount: 2500.00, date: '2024-11-28', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2024-065' },
+  { id: 'pi_2R8aO1O8g1kK3kNn', userName: 'Sophie Martin', userEmail: 'sophie@martin-consulting.fr', userType: 'consultant', amount: 299.00, date: '2024-10-15', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2024-064' },
+  { id: 'pi_3S9bP2P9h2lL4lOo', userName: 'Marlborough College', userEmail: 'finance@marlborough.edu', userType: 'school', amount: 2500.00, date: '2024-09-03', method: 'bank_transfer', status: 'completed', invoiceNumber: 'INV-2024-063' },
+  { id: 'pi_4T0cQ3Q0i3mM5mPp', userName: 'Education First Ltd', userEmail: 'accounts@ef-edu.com', userType: 'business', amount: 1200.00, date: '2024-08-20', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2024-062' },
+  { id: 'pi_5U1dR4R1j4nN6nQq', userName: 'Harrow Beijing', userEmail: 'finance@harrow-beijing.cn', userType: 'school', amount: 2500.00, date: '2024-07-11', method: 'cheque', status: 'completed', invoiceNumber: 'INV-2024-061' },
+  { id: 'pi_6V2eS5S2k5oO7oRr', userName: 'William Chen', userEmail: 'william@chen-edu.hk', userType: 'consultant', amount: 299.00, date: '2024-06-05', method: 'stripe', status: 'refunded', invoiceNumber: 'INV-2024-060' },
+  { id: 'pi_7W3fT6T3l6pP8pSs', userName: 'Dulwich College', userEmail: 'accounts@dulwich.edu', userType: 'school', amount: 2500.00, date: '2024-05-18', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2024-059' },
+  { id: 'pi_8X4gU7U4m7qQ9qTt', userName: 'Jessica Brown', userEmail: 'jessica@brown-edu.co.uk', userType: 'personal', amount: 99.00, date: '2024-04-22', method: 'bank_transfer', status: 'completed', invoiceNumber: 'INV-2024-058' },
+  { id: 'pi_9Y5hV8V5n8rR0rUu', userName: 'Shrewsbury School', userEmail: 'finance@shrewsbury.edu', userType: 'school', amount: 2500.00, date: '2024-03-14', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2024-057' },
+  { id: 'pi_0Z6iW9W6o9sS1sVv', userName: 'Study Abroad Co', userEmail: 'accounts@studyabroad.com', userType: 'business', amount: 1200.00, date: '2024-02-28', method: 'cheque', status: 'completed', invoiceNumber: 'INV-2024-056' },
+  { id: 'pi_1A7jX0X7p0tT2tWw', userName: 'Charterhouse', userEmail: 'bursar@charterhouse.edu', userType: 'school', amount: 2500.00, date: '2024-01-15', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2024-055' },
+  // 2023
+  { id: 'pi_2B8kY1Y8q1uU3uXx', userName: 'Uppingham School', userEmail: 'accounts@uppingham.edu', userType: 'school', amount: 2500.00, date: '2023-12-08', method: 'bank_transfer', status: 'completed', invoiceNumber: 'INV-2023-042' },
+  { id: 'pi_3C9lZ2Z9r2vV4vYy', userName: 'Mark Johnson', userEmail: 'mark@johnson-edu.com', userType: 'consultant', amount: 299.00, date: '2023-11-20', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2023-041' },
+  { id: 'pi_4D0mA3A0s3wW5wZz', userName: 'Rugby School', userEmail: 'finance@rugby.edu', userType: 'school', amount: 2500.00, date: '2023-10-05', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2023-040' },
+  { id: 'pi_5E1nB4B1t4xX6xAa', userName: 'Laura Davis', userEmail: 'laura@davis-edu.co.uk', userType: 'personal', amount: 99.00, date: '2023-09-12', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2023-039' },
+  { id: 'pi_6F2oC5C2u5yY7yBb', userName: 'Winchester College', userEmail: 'accounts@winchester.edu', userType: 'school', amount: 2500.00, date: '2023-08-25', method: 'cheque', status: 'completed', invoiceNumber: 'INV-2023-038' },
+  { id: 'pi_7G3pD6D3v6zZ8zCc', userName: 'Premier Education Group', userEmail: 'accounts@premieredu.com', userType: 'business', amount: 1200.00, date: '2023-07-18', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2023-037' },
+  { id: 'pi_8H4qE7E4w7aA9aDd', userName: 'Cheltenham College', userEmail: 'finance@cheltenham.edu', userType: 'school', amount: 2500.00, date: '2023-06-10', method: 'bank_transfer', status: 'completed', invoiceNumber: 'INV-2023-036' },
+  { id: 'pi_9I5rF8F5x8bB0bEe', userName: 'Natalie Smith', userEmail: 'natalie@smith-edu.com', userType: 'consultant', amount: 299.00, date: '2023-05-22', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2023-035' },
+  { id: 'pi_0J6sG9G6y9cC1cFf', userName: 'Radley College', userEmail: 'bursar@radley.edu', userType: 'school', amount: 2500.00, date: '2023-04-14', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2023-034' },
+  { id: 'pi_1K7tH0H7z0dD2dGg', userName: 'UK Study Centre', userEmail: 'accounts@ukstudy.com', userType: 'business', amount: 1200.00, date: '2023-03-08', method: 'cheque', status: 'completed', invoiceNumber: 'INV-2023-033' },
+  { id: 'pi_2L8uI1I8a1eE3eHh', userName: 'Tonbridge School', userEmail: 'finance@tonbridge.edu', userType: 'school', amount: 2500.00, date: '2023-02-20', method: 'stripe', status: 'completed', invoiceNumber: 'INV-2023-032' },
+  { id: 'pi_3M9vJ2J9b2fF4fIi', userName: 'James Wilson', userEmail: 'james@wilson-edu.co.uk', userType: 'consultant', amount: 299.00, date: '2023-01-11', method: 'bank_transfer', status: 'completed', invoiceNumber: 'INV-2023-031' },
 ])
 
 // State
