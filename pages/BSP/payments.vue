@@ -161,7 +161,7 @@
                   <div class="user-info-cell">
                     <div class="user-details">
                       <span class="member-name">{{ payment.name }}</span>
-                      <span class="member-email">{{ payment.email }} · ID: {{ payment.id }}</span>
+                      <span class="member-email">{{ payment.email }} · ID: {{ payment.userCode }}</span>
                     </div>
                   </div>
                 </td>
@@ -358,18 +358,18 @@ const clearSearch = () => {
 
 // Mock payment data
 const payments = ref([
-  { id: 1, name: 'St. Mary\'s School', email: 'finance@stmarys.edu', userCode: '2026011500001', userType: 'school', invoiceNo: 'INV-2026-001', amount: 299, period: '2026 Annual', status: 'paid', date: '2026-01-15' },
-  { id: 2, name: 'Brighton College', email: 'accounts@brighton.ac.uk', userCode: '2026022000001', userType: 'school', invoiceNo: 'INV-2026-002', amount: 299, period: '2026 Annual', status: 'paid', date: '2026-02-20' },
-  { id: 3, name: 'Victoria Education Group', email: 'victoria@vedu.com.hk', userCode: 'C2026030100001', userType: 'consultant', invoiceNo: 'INV-2026-003', amount: 199, period: '2026 Annual', status: 'pending', date: '—' },
-  { id: 4, name: 'UK Study Link', email: 'james@ukstudylink.com', userCode: 'C2026030200001', userType: 'consultant', invoiceNo: 'INV-2026-004', amount: 199, period: '2026 Annual', status: 'pending', date: '—' },
+  { id: 1, name: "St. Mary's School", email: 'admin@stmarys.edu.uk', userCode: '2026011500001', userType: 'school', invoiceNo: 'INV-2026-001', amount: 299, period: '2026 Annual', status: 'paid', date: '2026-01-15' },
+  { id: 2, name: 'Brighton College', email: 'admissions@brightoncollege.edu.uk', userCode: '2026022000001', userType: 'school', invoiceNo: 'INV-2026-002', amount: 299, period: '2026 Annual', status: 'paid', date: '2026-02-20' },
+  { id: 3, name: 'Victoria Education Group', email: 'victoria@vedu.com.hk', userCode: '2026011000001', userType: 'consultant', invoiceNo: 'INV-2026-003', amount: 199, period: '2026 Annual', status: 'pending', date: '—' },
+  { id: 4, name: 'UK Study Link', email: 'james@ukstudylink.com', userCode: '2026022500001', userType: 'consultant', invoiceNo: 'INV-2026-004', amount: 199, period: '2026 Annual', status: 'pending', date: '—' },
   { id: 5, name: 'Mr. Alan Foster', email: 'alan@ukboarding.com', userCode: 'P2026030100001', userType: 'personal', invoiceNo: 'INV-2026-005', amount: 99, period: '2026 Annual', status: 'overdue', date: '—' },
-  { id: 6, name: 'Elite Education Consultancy', email: 'sarah@eliteedu.hk', userCode: 'C2026030300001', userType: 'consultant', invoiceNo: 'INV-2026-006', amount: 199, period: '2026 Annual', status: 'paid', date: '2026-03-12' },
-  { id: 7, name: 'Global Study Partners', email: 'emma@globalstudy.hk', userCode: 'C2026030400001', userType: 'consultant', invoiceNo: 'INV-2026-007', amount: 199, period: '2026 Annual', status: 'pending', date: '—' },
-  { id: 8, name: 'Harrow School', email: 'bursar@harrowschool.org.uk', userCode: '2025060100001', userType: 'school', invoiceNo: 'INV-2026-008', amount: 299, period: '2026 Annual', status: 'paid', date: '2026-03-01' },
-  { id: 9, name: 'Eton College', email: 'finance@etoncollege.com', userCode: '2026041800001', userType: 'school', invoiceNo: 'INV-2026-009', amount: 299, period: '2026 Annual', status: 'overdue', date: '—' },
-  { id: 10, name: 'British Education HK', email: 'david@briteduhk.com', userCode: 'C2026030500001', userType: 'consultant', invoiceNo: 'INV-2026-010', amount: 199, period: '2026 Annual', status: 'paid', date: '2026-04-05' },
-  { id: 11, name: 'Wellington College', email: 'accounts@wellington.org', userCode: 'S2026010100001', userType: 'school', invoiceNo: 'INV-2026-011', amount: 299, period: '2026 Annual', status: 'pending', date: '—' },
-  { id: 12, name: 'Cheltenham Ladies\' College', email: 'finance@cheltladies.co.uk', userCode: '2026031500001', userType: 'school', invoiceNo: 'INV-2026-012', amount: 299, period: '2026 Annual', status: 'paid', date: '2026-04-10' }
+  { id: 6, name: 'Elite Education Consultancy', email: 'sarah@eliteedu.hk', userCode: '2026031200001', userType: 'consultant', invoiceNo: 'INV-2026-006', amount: 199, period: '2026 Annual', status: 'paid', date: '2026-03-12' },
+  { id: 7, name: 'Global Study Partners', email: 'emma@globalstudy.hk', userCode: '2026041500001', userType: 'consultant', invoiceNo: 'INV-2026-007', amount: 199, period: '2026 Annual', status: 'pending', date: '—' },
+  { id: 8, name: 'Harrow School', email: 'harrow@harrowschool.org.uk', userCode: '2025060100001', userType: 'school', invoiceNo: 'INV-2026-008', amount: 299, period: '2026 Annual', status: 'paid', date: '2026-03-01' },
+  { id: 9, name: 'Eton College', email: 'admissions@etoncollege.org.uk', userCode: '2026041800001', userType: 'school', invoiceNo: 'INV-2026-009', amount: 299, period: '2026 Annual', status: 'overdue', date: '—' },
+  { id: 10, name: 'British Education HK', email: 'david@briteduhk.com', userCode: '2026040500001', userType: 'consultant', invoiceNo: 'INV-2026-010', amount: 199, period: '2026 Annual', status: 'paid', date: '2026-04-05' },
+  { id: 11, name: "King's College School", email: 'info@kcs.org.uk', userCode: '2026031000001', userType: 'school', invoiceNo: 'INV-2026-011', amount: 299, period: '2026 Annual', status: 'pending', date: '—' },
+  { id: 12, name: "Cheltenham Ladies' College", email: 'registry@cheltenhamcollege.org', userCode: '2026031500001', userType: 'school', invoiceNo: 'INV-2026-012', amount: 299, period: '2026 Annual', status: 'paid', date: '2026-04-10' }
 ])
 
 // Computed stats
@@ -393,7 +393,7 @@ const filteredPayments = computed(() => {
   if (debouncedQuery.value) {
     const q = debouncedQuery.value.toLowerCase()
     result = result.filter(p => 
-      p.id.toString().includes(q) ||
+      p.userCode.toLowerCase().includes(q) ||
       p.name.toLowerCase().includes(q) || 
       p.email.toLowerCase().includes(q) ||
       p.invoiceNo.toLowerCase().includes(q)
