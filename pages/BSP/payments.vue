@@ -344,6 +344,36 @@
                   <span class="type-badge" :class="'type-' + selectedPayment.userType">{{ selectedPayment.userType }}</span>
                 </span>
               </div>
+              <div class="info-item">
+                <span class="info-label">Total Payments</span>
+                <span class="info-value">{{ userPaymentHistory.length }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- User Payment History -->
+          <div class="panel-section">
+            <h3 class="section-title">Payment History</h3>
+            <div class="history-list">
+              <div 
+                v-for="hp in userPaymentHistory" 
+                :key="hp.id" 
+                class="history-item"
+                :class="{ 'history-current': hp.id === selectedPayment.id }"
+              >
+                <div class="history-main">
+                  <span class="history-invoice">{{ hp.invoiceNumber }}</span>
+                  <span class="history-date">{{ hp.date }}</span>
+                </div>
+                <div class="history-meta">
+                  <span class="history-amount">£{{ hp.amount.toFixed(2) }}</span>
+                  <span class="status-badge" :class="'status-' + hp.status">{{ hp.status }}</span>
+                  <span class="method-badge" :class="'method-' + hp.method">{{ formatMethod(hp.method) }}</span>
+                </div>
+              </div>
+              <div v-if="userPaymentHistory.length === 0" class="history-empty">
+                No payment history found
+              </div>
             </div>
           </div>
         </div>
@@ -616,6 +646,13 @@ const visiblePages = computed(() => {
 const totalRevenue = computed(() =>
   payments.value.filter(p => p.status === 'completed').reduce((sum, p) => sum + p.amount, 0)
 )
+
+const userPaymentHistory = computed(() => {
+  if (!selectedPayment.value) return []
+  return payments.value
+    .filter(p => p.userEmail === selectedPayment.value.userEmail)
+    .sort((a, b) => b.date.localeCompare(a.date))
+})
 
 const pendingCount = computed(() => payments.value.filter(p => p.status === 'pending').length)
 const completedCount = computed(() => payments.value.filter(p => p.status === 'completed').length)
@@ -1178,6 +1215,66 @@ watch(activeTab, () => {
 }
 
 .btn-sort:hover { background: #f1f5f9; }
+
+/* Payment History */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid transparent;
+}
+
+.history-item.history-current {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+
+.history-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.history-invoice {
+  font-family: monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--bsp-dark, #1e293b);
+}
+
+.history-date {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.history-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.history-amount {
+  font-weight: 700;
+  color: var(--bsp-dark, #1e293b);
+  font-size: 0.9rem;
+  margin-right: 0.25rem;
+}
+
+.history-empty {
+  text-align: center;
+  padding: 1.5rem;
+  color: #94a3b8;
+  font-size: 0.875rem;
+}
 
 /* Empty State */
 .empty-state {
