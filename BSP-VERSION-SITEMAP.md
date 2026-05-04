@@ -47,14 +47,32 @@
 
 | 版本 | URL | 狀態 |
 |------|-----|------|
-| **3fa9b5a9** ⬅️ | https://3fa9b5a9.bsp-v3.pages.dev | **目前 rollback 版本** |
+| **3fa9b5a9** ⬅️ | https://3fa9b5a9.bsp-v3.pages.dev | **Rollback 版本** |
+
+### 2026-04-29 — Clean Header 統一版本 ⭐
+
+|| 版本 | URL | GitHub Commit | 內容 |
+||------|-----|---------------|------|
+|| **42c7f611** | https://42c7f611.bsp-v3.pages.dev | [`07d4d0a`](https://github.com/socialmedia-dot/bsp-v3/commit/07d4d0a) | **統一 Header 設計**（所有頁面使用 consultants 風格）：白色背景、logo-bsp.jpg、Home / Schools / Consultants / Login |
+
+### 2026-05-03 — Footer Sitemap 連結更新
+
+|| 版本 | URL | 內容 |
+||------|-----|------|
+|| **d3d945aa** | https://d3d945aa.bsp-v3.pages.dev | Footer 加入 Sitemap 連結（default layout + 6 個獨立 footer 頁面）|
+
+### 2026-05-03 — Sitemap 顯示進度更新
+
+|| 版本 | URL | 內容 |
+||------|-----|------|
+|| **f8c67d49** ⭐ | https://f8c67d49.bsp-v3.pages.dev | Sitemap 頁面重新設計，顯示所有規劃頁面及開發進度（17/42 頁完成，40%）|
 
 ---
 
 ## 🔄 當前狀態
 
-- **目前運作版本：** `3fa9b5a9.bsp-v3.pages.dev`（已 rollback）
-- **最新代碼版本：** `60224647.bsp-v3.pages.dev`（Schools Split View）
+- **目前部署版本：** `42c7f611.bsp-v3.pages.dev`（統一天下 header 設計）
+- **GitHub Repo：** https://github.com/socialmedia-dot/bsp-v3（`07d4d0a`）
 - **Workspace 程式碼：** `/home/ubuntu/.openclaw/workspace/data/projects/bsp-v3`
 
 ---

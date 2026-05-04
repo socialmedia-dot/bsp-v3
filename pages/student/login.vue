@@ -81,6 +81,7 @@
             <li><NuxtLink to="/schools">Find Schools</NuxtLink></li>
             <li><NuxtLink to="/consultants">Consultants</NuxtLink></li>
             <li><NuxtLink to="/student/register">Register</NuxtLink></li>
+                      <li><NuxtLink to="/sitemap">Sitemap</NuxtLink></li>
           </ul>
         </div>
         <div>
