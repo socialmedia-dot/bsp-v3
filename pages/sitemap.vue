@@ -51,6 +51,7 @@
           <li><NuxtLink to="/BSP/users/consultant">Consultant Users</NuxtLink></li>
           <li><NuxtLink to="/BSP/users/bspstaff">BSP Staff</NuxtLink></li>
           <li><NuxtLink to="/BSP/new-account-applications">New Account Applications</NuxtLink></li>
+          <li><NuxtLink to="/BSP/payments">Payments</NuxtLink></li>
         </ul>
       </div>
 
