@@ -18,7 +18,7 @@
             </NuxtLink>
             <NuxtLink to="/BSP/users/consultant" class="nav-item">
               <span class="nav-icon">💼</span>
-              <span>Agent</span>
+              <span>Consultant</span>
               <span class="nav-count">{{ stats.totalAgents }}</span>
             </NuxtLink>
             <NuxtLink to="/BSP/users/bspstaff" class="nav-item">
