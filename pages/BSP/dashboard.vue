@@ -16,7 +16,7 @@
               <span>School</span>
               <span class="nav-count">{{ stats.totalSchools }}</span>
             </NuxtLink>
-            <NuxtLink to="/BSP/users/agent" class="nav-item">
+            <NuxtLink to="/bsp/users/consultant" class="nav-item">
               <span class="nav-icon">💼</span>
               <span>Agent</span>
               <span class="nav-count">{{ stats.totalAgents }}</span>

@@ -86,7 +86,7 @@
           <li><span class="status done">✅</span> <NuxtLink to="/BSP/dashboard">BSP Dashboard</NuxtLink> <span class="note">(Overview)</span></li>
           <li><span class="status done">✅</span> <NuxtLink to="/BSP/new-account-applications">New Account Applications</NuxtLink></li>
           <li><span class="status done">✅</span> <NuxtLink to="/BSP/users/school">School Users</NuxtLink></li>
-          <li><span class="status done">✅</span> <NuxtLink to="/BSP/users/agent">Agent Users</NuxtLink></li>
+          <li><span class="status done">✅</span> <NuxtLink to="/bsp/users/consultant">Consultant Users</NuxtLink></li>
           <li><span class="status done">✅</span> <NuxtLink to="/BSP/users/personal">Personal Users</NuxtLink></li>
           <li><span class="status done">✅</span> <NuxtLink to="/BSP/users/bspstaff">BSP Staff Users</NuxtLink></li>
           <li><span class="status todo">❌</span> <span class="todo-link">/BSP/payments — Payments</span></li>

@@ -16,7 +16,7 @@
               <span>School</span>
               <span class="nav-count">24</span>
             </NuxtLink>
-            <NuxtLink to="/BSP/users/agent" class="nav-item active">
+            <NuxtLink to="/bsp/users/consultant" class="nav-item active">
               <span class="nav-icon">💼</span>
               <span>Consultant</span>
               <span class="nav-count">8</span>
@@ -466,7 +466,7 @@ const { setMeta } = useSEO()
 setMeta({
   title: 'Consultant Users — BSP Staff',
   description: 'Manage Consultant (Agent) user accounts',
-  path: '/BSP/users/agent',
+  path: '/bsp/users/consultant',
   type: 'website'
 })
 
