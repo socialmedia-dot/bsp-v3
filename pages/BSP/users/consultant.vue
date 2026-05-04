@@ -79,10 +79,10 @@
 
         <!-- Tabs -->
         <div class="tab-bar">
-          <button class="tab-btn" :class="{ active: activeTab === 'active' }" @click="activeTab = 'active'">
+          <button type="button" class="tab-btn" :class="{ active: activeTab === 'active' }" @click="activeTab = 'active'">
             Active Consultants <span class="tab-count">{{ consultants.length }}</span>
           </button>
-          <button class="tab-btn" :class="{ active: activeTab === 'deleted' }" @click="activeTab = 'deleted'">
+          <button type="button" class="tab-btn" :class="{ active: activeTab === 'deleted' }" @click="activeTab = 'deleted'">
             Deleted Accounts <span class="tab-count deleted">{{ deletedConsultants.length }}</span>
           </button>
         </div>
@@ -141,9 +141,7 @@
                   </div>
                 </td>
                 <td class="td-company">
-                  <NuxtLink :to="`/consultant/${slugify(consultant.location)}/${slugify(consultant.company)}`" class="company-link">
-                    {{ consultant.company }}
-                  </NuxtLink>
+                  <span class="company-text">{{ consultant.company }}</span>
                 </td>
                 <td class="td-live">
                   <span v-if="consultant.liveApplications > 0" class="live-badge">
@@ -173,13 +171,13 @@
                 </td>
                 <td class="td-actions">
                   <div class="action-buttons">
-                    <button class="btn-action btn-view" @click="viewConsultant(consultant.id)" title="View Details">
+                    <button type="button" class="btn-action btn-view" @click="viewConsultant(consultant.id)" title="View Details">
                       👁️
                     </button>
-                    <button class="btn-action btn-edit" @click="editConsultant(consultant.id)" title="Edit">
+                    <button type="button" class="btn-action btn-edit" @click="editConsultant(consultant.id)" title="Edit">
                       ✏️
                     </button>
-                    <button class="btn-action btn-more" @click="toggleMenu(consultant.id)" title="More">
+                    <button type="button" class="btn-action btn-more" @click="toggleMenu(consultant.id)" title="More">
                       ⋮
                     </button>
                   </div>
