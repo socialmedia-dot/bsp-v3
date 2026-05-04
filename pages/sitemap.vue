@@ -89,10 +89,10 @@
           <li><span class="status done">✅</span> <NuxtLink to="/BSP/users/consultant">Consultant Users</NuxtLink></li>
           <li><span class="status done">✅</span> <NuxtLink to="/BSP/users/personal">Personal Users</NuxtLink></li>
           <li><span class="status done">✅</span> <NuxtLink to="/BSP/users/bspstaff">BSP Staff Users</NuxtLink></li>
-          <li><span class="status todo">❌</span> <span class="todo-link">/BSP/payments — Payments</span></li>
-          <li><span class="status todo">❌</span> <span class="todo-link">/BSP/settings/fees — Annual Fee Settings</span></li>
-          <li><span class="status todo">❌</span> <span class="todo-link">/BSP/settings/website — Website Settings</span></li>
-          <li><span class="status todo">❌</span> <span class="todo-link">/BSP/settings/staff — Staff Settings</span></li>
+          <li><span class="status done">✅</span> <NuxtLink to="/BSP/payments">Payments</NuxtLink></li>
+          <li><span class="status done">✅</span> <NuxtLink to="/BSP/settings/fees">Annual Fee Settings</NuxtLink></li>
+          <li><span class="status done">✅</span> <NuxtLink to="/BSP/settings/website">Website Settings</NuxtLink></li>
+          <li><span class="status done">✅</span> <NuxtLink to="/BSP/settings/staff">Staff Settings</NuxtLink></li>
         </ul>
       </div>
 
@@ -156,11 +156,11 @@ const currentDate = new Date().toLocaleDateString('en-GB', {
   day: 'numeric'
 })
 
-const deployedUrl = 'https://d3d945aa.bsp-v3.pages.dev'
+const deployedUrl = 'https://853627c9.bsp-v3.pages.dev'
 
 // Progress tracking
 const totalCount = 51
-const completedCount = 22
+const completedCount = 26
 const todoCount = totalCount - completedCount
 const progressPercent = Math.round((completedCount / totalCount) * 100)
 </script>
