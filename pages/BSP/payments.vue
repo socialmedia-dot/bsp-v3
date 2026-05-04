@@ -152,6 +152,13 @@
               <option value="bank_transfer">Bank Transfer</option>
               <option value="cheque">Cheque</option>
             </select>
+            <select v-model="filterYear" class="filter-select">
+              <option value="all">All Years</option>
+              <option v-for="year in availableYears" :key="year" :value="year">{{ year }}</option>
+            </select>
+            <button class="btn-sort" @click="toggleSort" title="Toggle sort order">
+              {{ sortOrder === 'desc' ? '🔽' : '🔼' }}
+            </button>
           </div>
           <div class="filter-right">
             <span class="result-count">{{ filteredPayments.length }} payments</span>
@@ -498,6 +505,8 @@ const activeTab = ref<'all' | 'pending' | 'completed' | 'refunded'>('all')
 const searchQuery = ref('')
 const filterType = ref('all')
 const filterMethod = ref('all')
+const filterYear = ref('all')
+const sortOrder = ref<'desc' | 'asc'>('desc')
 const currentPage = ref(1)
 const pageSize = 10
 const showPanel = ref(false)
@@ -531,6 +540,11 @@ const clearSearch = () => {
 }
 
 // Computed
+const availableYears = computed(() => {
+  const years = new Set(payments.value.map(p => p.date.slice(0, 4)))
+  return Array.from(years).sort((a, b) => b.localeCompare(a))
+})
+
 const filteredPayments = computed(() => {
   let result = payments.value
 
@@ -549,6 +563,11 @@ const filteredPayments = computed(() => {
     result = result.filter(p => p.method === filterMethod.value)
   }
 
+  // Year filter
+  if (filterYear.value !== 'all') {
+    result = result.filter(p => p.date.startsWith(filterYear.value))
+  }
+
   // Search
   if (debouncedQuery.value) {
     const q = debouncedQuery.value.toLowerCase()
@@ -559,6 +578,13 @@ const filteredPayments = computed(() => {
       p.id.toLowerCase().includes(q)
     )
   }
+
+  // Sort by date
+  result = [...result].sort((a, b) => {
+    return sortOrder.value === 'desc'
+      ? b.date.localeCompare(a.date)
+      : a.date.localeCompare(b.date)
+  })
 
   return result
 })
@@ -687,6 +713,10 @@ const processReject = () => {
 
 const exportPayments = () => {
   alert('Exporting payments CSV...')
+}
+
+const toggleSort = () => {
+  sortOrder.value = sortOrder.value === 'desc' ? 'asc' : 'desc'
 }
 
 // Reset page on tab change
@@ -1136,6 +1166,18 @@ watch(activeTab, () => {
 .btn-reject:hover { background: #fee2e2; border-color: #fca5a5; }
 
 .btn-refund:hover { background: #fee2e2; border-color: #fca5a5; }
+
+.btn-sort {
+  padding: 0.625rem 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+}
+
+.btn-sort:hover { background: #f1f5f9; }
 
 /* Empty State */
 .empty-state {
