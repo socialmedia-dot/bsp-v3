@@ -121,8 +121,9 @@
           </div>
           <div class="form-grid">
             <div class="form-group">
-              <label class="form-label">Billing Start Date</label>
-              <input type="date" v-model="billingSettings.startDate" class="form-input" />
+              <label class="form-label">Renewal Date (Annual)</label>
+              <input type="text" v-model="billingSettings.renewalDate" class="form-input" readonly />
+              <span class="form-hint">All memberships renew on this date each year</span>
             </div>
             <div class="form-group">
               <label class="form-label">Grace Period (days)</label>
@@ -135,6 +136,52 @@
             <div class="form-group">
               <label class="form-label">Late Fee (%)</label>
               <input type="number" step="0.1" v-model="billingSettings.lateFeePercent" class="form-input" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Mid-Term Join Settings -->
+        <div class="settings-section">
+          <div class="section-header">
+            <h2 class="section-title">Mid-Term Join Settings</h2>
+            <span class="section-hint">Users joining between renewal cycles</span>
+          </div>
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label class="form-label">Billing Rule for Mid-Term Joiners</label>
+              <select v-model="billingSettings.midTermPolicy" class="form-input">
+                <option value="pro_rata">Pro-rata (charge remaining months until next renewal)</option>
+                <option value="full_year">Full Year (charge full annual fee, valid until next renewal)</option>
+                <option value="fixed_period">Fixed Period (minimum months charged)</option>
+              </select>
+            </div>
+            <div v-if="billingSettings.midTermPolicy === 'fixed_period'" class="form-group">
+              <label class="form-label">Minimum Charge (months)</label>
+              <input type="number" min="1" max="12" v-model="billingSettings.minMonths" class="form-input" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Cut-off Month (no pro-rata after this)</label>
+              <select v-model="billingSettings.cutOffMonth" class="form-input">
+                <option v-for="m in 12" :key="m" :value="m">{{ monthNames[m-1] }}</option>
+              </select>
+              <span class="form-hint">After this month, charge full year to next renewal</span>
+            </div>
+          </div>
+
+          <!-- Example Calculation -->
+          <div class="calc-preview">
+            <h3 class="calc-title">Example Calculation</h3>
+            <div class="calc-row">
+              <span class="calc-label">School joins in March (£299/year):</span>
+              <span class="calc-value">{{ midTermExample.march }}</span>
+            </div>
+            <div class="calc-row">
+              <span class="calc-label">Consultant joins in August (£199/year):</span>
+              <span class="calc-value">{{ midTermExample.august }}</span>
+            </div>
+            <div class="calc-row">
+              <span class="calc-label">Personal joins in September (£99/year):</span>
+              <span class="calc-value">{{ midTermExample.september }}</span>
             </div>
           </div>
         </div>
@@ -155,11 +202,50 @@ const feeTiers = ref([
   { id: 3, userType: 'personal', name: 'Personal Membership', amount: 99, currency: 'GBP', active: true, updatedAt: '2026-04-15' },
 ])
 
+const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December']
+
 const billingSettings = ref({
-  startDate: '2026-01-01',
+  renewalDate: '01 October',
   gracePeriod: 30,
   reminderDays: 7,
   lateFeePercent: 5.0,
+  midTermPolicy: 'pro_rata',
+  minMonths: 3,
+  cutOffMonth: 7, // July
+})
+
+// Mid-term join example calculations
+const midTermExample = computed(() => {
+  const policy = billingSettings.value.midTermPolicy
+  const cutOff = billingSettings.value.cutOffMonth
+  const minMonths = billingSettings.value.minMonths || 1
+
+  const calc = (amount: number, joinMonth: number) => {
+    const monthsToOct = joinMonth <= 10 ? (10 - joinMonth) : (10 + 12 - joinMonth)
+    const nextRenewalYear = joinMonth <= 10 ? new Date().getFullYear() : new Date().getFullYear() + 1
+
+    if (policy === 'full_year') {
+      return `£${amount} full year → expires 01 Oct ${nextRenewalYear}`
+    }
+    if (policy === 'fixed_period') {
+      const chargeMonths = Math.max(monthsToOct, minMonths)
+      const charge = Math.round((amount / 12) * chargeMonths)
+      return `£${charge} (${chargeMonths} months min) → expires 01 Oct ${nextRenewalYear}`
+    }
+    // pro_rata
+    if (joinMonth > cutOff) {
+      return `£${amount} full year (after cut-off) → expires 01 Oct ${nextRenewalYear + 1}`
+    }
+    const charge = Math.round((amount / 12) * monthsToOct)
+    return `£${charge} (${monthsToOct} months pro-rata) → expires 01 Oct ${nextRenewalYear}`
+  }
+
+  return {
+    march: calc(299, 3),      // School
+    august: calc(199, 8),     // Consultant
+    september: calc(99, 9),   // Personal
+  }
 })
 
 const showAddTier = ref(false)
@@ -222,9 +308,20 @@ const saveSettings = () => {
 /* Form Grid */
 .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
 .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-group.full-width { grid-column: 1 / -1; }
 .form-label { font-size: 0.8rem; font-weight: 600; color: #64748b; }
 .form-input { padding: 0.65rem 0.875rem; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.9rem; font-family: inherit; }
 .form-input:focus { outline: none; border-color: var(--bsp-secondary, #3b82f6); box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+.form-hint { font-size: 0.75rem; color: #94a3b8; margin-top: 0.15rem; }
+.section-hint { font-size: 0.8rem; color: #94a3b8; }
+
+/* Calculation Preview */
+.calc-preview { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem 1.25rem; margin-top: 1rem; }
+.calc-title { font-size: 0.85rem; font-weight: 600; color: #475569; margin-bottom: 0.75rem; }
+.calc-row { display: flex; justify-content: space-between; padding: 0.4rem 0; font-size: 0.85rem; border-bottom: 1px solid #f1f5f9; }
+.calc-row:last-child { border-bottom: none; }
+.calc-label { color: #64748b; }
+.calc-value { font-weight: 600; color: var(--bsp-primary, #212E54); }
 
 /* Buttons */
 .btn { padding: 0.6rem 1.25rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; }
