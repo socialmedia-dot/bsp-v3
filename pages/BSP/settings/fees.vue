@@ -95,14 +95,18 @@
                       <span class="tier-name">{{ tier.name }}</span>
                     </div>
                   </td>
-                  <td><span class="fee-amount">£{{ tier.amount }}</span></td>
+                  <td><span class="fee-amount">{{ tier.amount === 0 ? 'Free' : '£' + tier.amount }}</span></td>
                   <td>{{ tier.currency }}</td>
                   <td class="text-muted">{{ tier.validFrom || '—' }}</td>
                   <td>
-                    <span class="status-pill active">Active</span>
+                    <span class="status-pill" :class="tier.active ? 'active' : 'paused'">{{ tier.active ? 'Active' : 'Paused' }}</span>
                   </td>
                   <td>
                     <div class="action-buttons">
+                      <label class="toggle-switch" :title="tier.active ? 'Click to pause' : 'Click to activate'">
+                        <input type="checkbox" v-model="tier.active" />
+                        <span class="toggle-slider"></span>
+                      </label>
                       <button class="btn-action" @click="openEditTier(tier)" title="Edit / New Version">✏️</button>
                     </div>
                   </td>
@@ -146,7 +150,7 @@
                       <span class="tier-name">{{ tier.name }}</span>
                     </div>
                   </td>
-                  <td><span class="fee-amount">£{{ tier.amount }}</span></td>
+                  <td><span class="fee-amount">{{ tier.amount === 0 ? 'Free' : '£' + tier.amount }}</span></td>
                   <td class="text-muted">{{ tier.validFrom || '—' }}</td>
                   <td class="text-muted">{{ tier.validUntil || '—' }}</td>
                   <td>
@@ -224,15 +228,15 @@
           <div class="calc-preview">
             <h3 class="calc-title">Example Calculation (using current active prices)</h3>
             <div class="calc-row">
-              <span class="calc-label">School joins in March (£{{ currentPriceFor('school') }}/year):</span>
+              <span class="calc-label">School joins in March ({{ currentPriceFor('school') === 0 ? 'Free' : '£' + currentPriceFor('school') }}/year):</span>
               <span class="calc-value">{{ midTermExample.march }}</span>
             </div>
             <div class="calc-row">
-              <span class="calc-label">Consultant joins in August (£{{ currentPriceFor('consultant') }}/year):</span>
+              <span class="calc-label">Consultant joins in August ({{ currentPriceFor('consultant') === 0 ? 'Free' : '£' + currentPriceFor('consultant') }}/year):</span>
               <span class="calc-value">{{ midTermExample.august }}</span>
             </div>
             <div class="calc-row">
-              <span class="calc-label">Personal joins in September (£{{ currentPriceFor('personal') }}/year):</span>
+              <span class="calc-label">Personal joins in September ({{ currentPriceFor('personal') === 0 ? 'Free' : '£' + currentPriceFor('personal') }}/year):</span>
               <span class="calc-value">{{ midTermExample.september }}</span>
             </div>
           </div>
@@ -325,7 +329,7 @@ const feeTiers = ref<FeeTier[]>([
   { id: 3, userType: 'personal', name: 'Personal Membership', amount: 89, currency: 'GBP', validFrom: '2023-10-01', validUntil: '2025-09-30', active: false, updatedAt: '2023-09-01' },
   { id: 4, userType: 'school', name: 'School Membership', amount: 299, currency: 'GBP', validFrom: '2025-10-01', validUntil: null, active: true, updatedAt: '2025-04-15' },
   { id: 5, userType: 'consultant', name: 'Consultant Membership', amount: 199, currency: 'GBP', validFrom: '2025-10-01', validUntil: null, active: true, updatedAt: '2025-04-15' },
-  { id: 6, userType: 'personal', name: 'Personal Membership', amount: 99, currency: 'GBP', validFrom: '2025-10-01', validUntil: null, active: true, updatedAt: '2025-04-15' },
+  { id: 6, userType: 'personal', name: 'Personal Membership', amount: 0, currency: 'GBP', validFrom: '2025-10-01', validUntil: null, active: true, updatedAt: '2025-04-15' },
 ])
 
 // Currently active tiers (validUntil === null)
@@ -555,7 +559,11 @@ const saveSettings = () => {
 /* Status Pills */
 .status-pill { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
 .status-pill.active { background: #d1fae5; color: #047857; }
+.status-pill.paused { background: #fee2e2; color: #991b1b; }
 .status-pill.expired { background: #f1f5f9; color: #64748b; }
+
+/* Action Buttons */
+.action-buttons { display: flex; align-items: center; gap: 0.5rem; }
 
 /* Empty State */
 .empty-state { text-align: center; padding: 2rem; }
