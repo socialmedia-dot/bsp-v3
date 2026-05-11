@@ -103,10 +103,13 @@
                   </td>
                   <td>
                     <div class="action-buttons">
-                      <label class="toggle-switch" :title="tier.active ? 'Click to pause' : 'Click to activate'">
-                        <input type="checkbox" v-model="tier.active" />
-                        <span class="toggle-slider"></span>
-                      </label>
+                      <button
+                        class="btn-toggle"
+                        :class="tier.active ? 'btn-pause' : 'btn-resume'"
+                        @click="tier.active = !tier.active"
+                      >
+                        {{ tier.active ? '⏸ 暫停' : '▶ 開啟' }}
+                      </button>
                       <button class="btn-action" @click="openEditTier(tier)" title="Edit / New Version">✏️</button>
                     </div>
                   </td>
@@ -615,6 +618,13 @@ const saveSettings = () => {
 .btn-success:hover { background: #059669; }
 .btn-action { background: none; border: none; font-size: 1rem; cursor: pointer; padding: 0.35rem; border-radius: 4px; }
 .btn-action:hover { background: #f1f5f9; }
+
+/* Toggle Buttons */
+.btn-toggle { padding: 0.35rem 0.75rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; }
+.btn-pause { background: #fee2e2; color: #991b1b; border-color: #fecaca; }
+.btn-pause:hover { background: #fecaca; }
+.btn-resume { background: #d1fae5; color: #047857; border-color: #a7f3d0; }
+.btn-resume:hover { background: #a7f3d0; }
 
 /* Footer */
 .settings-footer { display: flex; justify-content: flex-end; }
