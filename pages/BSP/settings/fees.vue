@@ -103,13 +103,6 @@
                   </td>
                   <td>
                     <div class="action-buttons">
-                      <button
-                        class="btn-toggle"
-                        :class="tier.active ? 'btn-pause' : 'btn-resume'"
-                        @click="tier.active = !tier.active"
-                      >
-                        {{ tier.active ? '⏸ 暫停' : '▶ 開啟' }}
-                      </button>
                       <button class="btn-action" @click="openEditTier(tier)" title="Edit / New Version">✏️</button>
                     </div>
                   </td>
@@ -282,6 +275,27 @@
             <span class="form-hint">When this price becomes effective</span>
           </div>
 
+          <!-- Active / Pause toggle (edit only) -->
+          <div v-if="isEditing" class="form-group">
+            <label class="form-label">Status</label>
+            <div class="versioning-options" style="flex-direction: row; gap: 0.75rem;">
+              <label class="versioning-option" style="flex: 1;">
+                <input type="radio" v-model="tierForm.active" :value="true" />
+                <div class="option-content">
+                  <strong>Active</strong>
+                  <span>Users can register and be charged</span>
+                </div>
+              </label>
+              <label class="versioning-option" style="flex: 1;">
+                <input type="radio" v-model="tierForm.active" :value="false" />
+                <div class="option-content">
+                  <strong>Paused</strong>
+                  <span>Temporarily stop new registrations</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
           <!-- Versioning option when editing active tier -->
           <div v-if="isEditing && editingTier && !editingTier.validUntil" class="form-group versioning-box">
             <label class="form-label">🔄 Price Change Mode</label>
@@ -416,6 +430,7 @@ const tierForm = ref({
   amount: 0,
   validFrom: new Date().toISOString().split('T')[0],
   changeMode: 'version' as 'version' | 'edit',
+  active: true,
 })
 
 const openAddTier = () => {
@@ -428,6 +443,7 @@ const openAddTier = () => {
     amount: 0,
     validFrom: new Date().toISOString().split('T')[0],
     changeMode: 'version',
+    active: true,
   }
   showTierModal.value = true
 }
@@ -442,6 +458,7 @@ const openEditTier = (tier: FeeTier) => {
     amount: tier.amount,
     validFrom: tier.validFrom || new Date().toISOString().split('T')[0],
     changeMode: 'version',
+    active: tier.active,
   }
   showTierModal.value = true
 }
@@ -480,7 +497,7 @@ const saveTier = () => {
         currency: 'GBP',
         validFrom: tierForm.value.validFrom,
         validUntil: null,
-        active: true,
+        active: tierForm.value.active,
         updatedAt: today,
       })
     } else {
@@ -491,6 +508,7 @@ const saveTier = () => {
         amount: tierForm.value.amount,
         userType: tierForm.value.userType,
         validFrom: tierForm.value.validFrom,
+        active: tierForm.value.active,
         updatedAt: new Date().toISOString().split('T')[0],
       }
     }
@@ -505,7 +523,7 @@ const saveTier = () => {
       currency: 'GBP',
       validFrom: tierForm.value.validFrom,
       validUntil: null,
-      active: true,
+      active: tierForm.value.active,
       updatedAt: new Date().toISOString().split('T')[0],
     })
   }
