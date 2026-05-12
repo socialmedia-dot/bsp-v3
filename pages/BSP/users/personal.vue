@@ -790,6 +790,7 @@ const exportUsers = () => {
   flex: 1;
   padding: 1.5rem 2rem;
   overflow-y: auto;
+  min-width: 0;
 }
 
 .page-header {
@@ -908,12 +909,13 @@ const exportUsers = () => {
   background: white;
   border-radius: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
+  overflow-x: auto;
   margin-bottom: 1rem;
 }
 
 .users-table {
   width: 100%;
+  min-width: 700px;
   border-collapse: collapse;
 }
 
