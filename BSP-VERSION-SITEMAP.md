@@ -61,11 +61,17 @@
 ||------|-----|------|
 || **d3d945aa** | https://d3d945aa.bsp-v3.pages.dev | Footer 加入 Sitemap 連結（default layout + 6 個獨立 footer 頁面）|
 
+### 2026-05-13 — Fee Pause/Resume 放入 Edit Modal
+
+| 版本 | URL | 內容 |
+|------|-----|------|
+| **4a80d3c2** ⭐ | https://4a80d3c2.bsp-v3.pages.dev | Fee 暫停/開啟放入 Edit Modal，儲存後才生效 |
+
 ### 2026-05-13 — Settings Pages + News 功能
 
 | 版本 | URL | 內容 |
 |------|-----|------|
-| **eb2db685** ⭐ | https://eb2db685.bsp-v3.pages.dev | Fee pause/resume button、Settings 頁面（fees/staff/website）、News 頁面、HK News 頁面、Sitemap 更新 |
+| eb2db685 | https://eb2db685.bsp-v3.pages.dev | Fee pause/resume button、Settings 頁面（fees/staff/website）、News 頁面、HK News 頁面、Sitemap 更新 |
 
 ### 2026-05-03 — Sitemap 顯示進度更新
 
@@ -77,7 +83,7 @@
 
 ## 🔄 當前狀態
 
-- **目前部署版本：** `eb2db685.bsp-v3.pages.dev`（Settings 頁面 + News 功能）
+- **目前部署版本：** `4a80d3c2.bsp-v3.pages.dev`（Fee 暫停/開啟放入 Edit Modal，儲存後才生效）
 - **GitHub Repo：** https://github.com/socialmedia-dot/bsp-v3（`c363fe1`）
 - **Workspace 程式碼：** `/home/ubuntu/workspace/data/projects/bsp-v3`
 
