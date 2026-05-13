@@ -73,11 +73,12 @@
 |------|-----|------|
 | eb2db685 | https://eb2db685.bsp-v3.pages.dev | Fee pause/resume button、Settings 頁面（fees/staff/website）、News 頁面、HK News 頁面、Sitemap 更新 |
 
-### 2026-05-13 — BSP Staff 整合 Role Permissions
+### 2026-05-13 — BSP Staff 整合 Role Permissions（可編輯）
 
 || 版本 | URL | 內容 |
 ||------|-----|------|
-|| **33caad01** ⭐ | https://33caad01.bsp-v3.pages.dev | BSP Staff 頁面整合 Role Permissions（3個 Tabs：Active Staff / Deleted Accounts / Role Permissions）|
+|| **1017c6e2** ⭐ | https://1017c6e2.bsp-v3.pages.dev | BSP Staff Role Permissions 可編輯（Edit Mode、Checkboxes、加新 Role）|
+|| **33caad01** | https://33caad01.bsp-v3.pages.dev | BSP Staff 頁面整合 Role Permissions（3個 Tabs）|
 
 ### 2026-05-03 — Sitemap 顯示進度更新
 
@@ -89,8 +90,8 @@
 
 ## 🔄 當前狀態
 
-- **目前部署版本：** `33caad01.bsp-v3.pages.dev`（BSP Staff 頁面整合 Role Permissions）
-- **GitHub Repo：** https://github.com/socialmedia-dot/bsp-v3（`eba237a`）
+- **目前部署版本：** `1017c6e2.bsp-v3.pages.dev`（BSP Staff 可編輯 Permission Matrix、加新 Role）
+- **GitHub Repo：** https://github.com/socialmedia-dot/bsp-v3（`c9ba4b7`）
 - **Workspace 程式碼：** `/home/ubuntu/workspace/data/projects/bsp-v3`
 
 ---
