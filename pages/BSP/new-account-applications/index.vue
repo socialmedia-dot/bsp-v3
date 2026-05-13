@@ -23,7 +23,7 @@
             </NuxtLink>
             <NuxtLink to="/BSP/users/bspstaff" class="nav-item">
               <span class="nav-icon">👔</span>
-              <span>BSP Staff</span>
+              <span>BSP Admin</span>
               <span class="nav-count">3</span>
             </NuxtLink>
           </div>
@@ -494,7 +494,7 @@
 <script setup lang="ts">
 const { setMeta } = useSEO()
 setMeta({
-  title: 'New Account Applications — BSP Staff',
+  title: 'New Account Applications — BSP Admin',
   description: 'Review and approve new account requests',
   path: '/BSP/applications',
   type: 'website'

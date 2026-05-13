@@ -20,7 +20,7 @@
             </NuxtLink>
             <NuxtLink to="/BSP/users/bspstaff" class="nav-item">
               <span class="nav-icon">👔</span>
-              <span>BSP Staff</span>
+              <span>BSP Admin</span>
             </NuxtLink>
           </div>
 

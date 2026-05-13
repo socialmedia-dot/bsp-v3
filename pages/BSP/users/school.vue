@@ -23,7 +23,7 @@
             </NuxtLink>
             <NuxtLink to="/BSP/users/bspstaff" class="nav-item">
               <span class="nav-icon">👔</span>
-              <span>BSP Staff</span>
+              <span>BSP Admin</span>
               <span class="nav-count">3</span>
             </NuxtLink>
           </div>
@@ -399,7 +399,7 @@
 <script setup lang="ts">
 const { setMeta } = useSEO()
 setMeta({
-  title: 'School Users — BSP Staff',
+  title: 'School Users — BSP Admin',
   description: 'Manage School user accounts',
   path: '/BSP/users/personal',
   type: 'website'

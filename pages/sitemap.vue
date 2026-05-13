@@ -79,16 +79,16 @@
         </ul>
       </div>
 
-      <!-- BSP Staff Portal -->
+      <!-- BSP Admin Portal -->
       <div class="sitemap-section">
-        <h2>⚙️ BSP Staff Portal</h2>
+        <h2>⚙️ BSP Admin Portal</h2>
         <ul>
           <li><span class="status done">✅</span> <NuxtLink to="/BSP/dashboard">BSP Dashboard</NuxtLink> <span class="note">(Overview)</span></li>
           <li><span class="status done">✅</span> <NuxtLink to="/BSP/new-account-applications">New Account Applications</NuxtLink></li>
           <li><span class="status done">✅</span> <NuxtLink to="/BSP/users/school">School Users</NuxtLink></li>
           <li><span class="status done">✅</span> <NuxtLink to="/BSP/users/consultant">Consultant Users</NuxtLink></li>
           <li><span class="status done">✅</span> <NuxtLink to="/BSP/users/personal">Personal Users</NuxtLink></li>
-          <li><span class="status done">✅</span> <NuxtLink to="/BSP/users/bspstaff">BSP Staff Users</NuxtLink></li>
+          <li><span class="status done">✅</span> <NuxtLink to="/BSP/users/bspstaff">BSP Admin Users</NuxtLink></li>
           <li><span class="status done">✅</span> <NuxtLink to="/BSP/payments">Payments</NuxtLink></li>
           <li><span class="status done">✅</span> <NuxtLink to="/BSP/settings/fees">Annual Fee Settings</NuxtLink></li>
           <li><span class="status done">✅</span> <NuxtLink to="/BSP/settings/website">Website Settings</NuxtLink></li>

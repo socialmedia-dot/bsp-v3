@@ -23,7 +23,7 @@
             </NuxtLink>
             <NuxtLink to="/BSP/users/bspstaff" class="nav-item">
               <span class="nav-icon">👔</span>
-              <span>BSP Staff</span>
+              <span>BSP Admin</span>
               <span class="nav-count">{{ stats.totalStaff }}</span>
             </NuxtLink>
           </div>
@@ -185,8 +185,8 @@
 <script setup lang="ts">
 const { setMeta } = useSEO()
 setMeta({
-  title: 'BSP Staff Dashboard',
-  description: 'BSP Staff Administration Portal',
+  title: 'BSP Admin Dashboard',
+  description: 'BSP Admin Administration Portal',
   path: '/BSP/dashboard',
   type: 'website'
 })

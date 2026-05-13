@@ -23,7 +23,7 @@
             </NuxtLink>
             <NuxtLink to="/BSP/users/bspstaff" class="nav-item active">
               <span class="nav-icon">👔</span>
-              <span>BSP Staff</span>
+              <span>BSP Admin</span>
               <span class="nav-count">{{ staff.length }}</span>
             </NuxtLink>
           </div>
@@ -63,7 +63,7 @@
         <!-- Page Header -->
         <div class="page-header">
           <div class="page-title-area">
-            <h1 class="page-title">👔 BSP Staff</h1>
+            <h1 class="page-title">👔 BSP Admin</h1>
             <p class="page-subtitle">Manage BSP staff accounts, roles and permissions</p>
           </div>
           <div class="page-actions">
@@ -497,7 +497,7 @@
 <script setup lang="ts">
 const { setMeta } = useSEO()
 setMeta({
-  title: 'BSP Staff — BSP Dashboard',
+  title: 'BSP Admin — BSP Dashboard',
   description: 'Manage BSP staff accounts, roles and permissions',
   path: '/BSP/users/bspstaff',
   type: 'website'
