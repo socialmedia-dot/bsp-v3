@@ -216,16 +216,20 @@
         <!-- Role Permissions Tab -->
         <template v-if="activeTab === 'roles'">
           <div class="settings-section">
-            <div class="section-header">
-              <h2 class="section-title">Role Permissions Overview</h2>
-              <p class="section-desc">Each role has a predefined set of permissions. Master has full access by default.</p>
+            <div class="section-header-row">
+              <div>
+                <h2 class="section-title">Role Permissions Overview</h2>
+                <p class="section-desc">These are the default permission templates applied when creating new staff accounts.</p>
+              </div>
+              <button class="btn btn-secondary" @click="openAddRoleModal">➕ Add Role</button>
             </div>
             <div class="permissions-grid">
-              <div v-for="role in roles" :key="role.name" class="permission-card">
+              <div v-for="role in roles" :key="role.key" class="permission-card">
                 <div class="permission-header">
                   <div class="permission-title-row">
                     <span class="role-icon">{{ role.icon }}</span>
                     <h3 class="permission-title">{{ role.name }}</h3>
+                    <button v-if="role.key !== 'master'" class="btn-edit-role" @click="openEditRoleModal(role)" title="Edit Role">✏️</button>
                   </div>
                   <span class="permission-count">{{ role.permissions.length }} permissions</span>
                 </div>
@@ -240,24 +244,48 @@
           </div>
 
           <div class="settings-section">
-            <div class="section-header">
-              <h2 class="section-title">Permission Matrix</h2>
-              <p class="section-desc">Quick reference for which roles can access which features.</p>
+            <div class="section-header-row">
+              <div>
+                <h2 class="section-title">Permission Matrix</h2>
+                <p class="section-desc">{{ roleEditMode ? 'Click checkboxes to toggle permissions, then Save Changes.' : 'Quick reference for which roles can access which features.' }}</p>
+              </div>
+              <div class="section-actions">
+                <button v-if="!roleEditMode" class="btn btn-secondary" @click="roleEditMode = true">✏️ Edit Permissions</button>
+                <template v-else>
+                  <button class="btn btn-secondary" @click="cancelRoleEdits">Cancel</button>
+                  <button class="btn btn-primary" @click="saveRoleEdits">💾 Save Changes</button>
+                </template>
+              </div>
             </div>
             <div class="matrix-table-wrapper">
               <table class="matrix-table">
                 <thead>
                   <tr>
                     <th>Permission</th>
-                    <th v-for="role in roles" :key="role.name" class="matrix-role-header">{{ role.name }}</th>
+                    <th v-for="role in roles" :key="role.key" class="matrix-role-header">
+                      <span class="role-icon-small">{{ role.icon }}</span>
+                      {{ role.name }}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="perm in allPermissionLabels" :key="perm.key">
                     <td class="matrix-perm-name">{{ perm.label }}</td>
-                    <td v-for="role in roles" :key="role.name" class="matrix-check">
-                      <span v-if="role.permissions.includes(perm.label)" class="check-yes">✓</span>
-                      <span v-else class="check-no">—</span>
+                    <td v-for="role in roles" :key="role.key" class="matrix-check">
+                      <template v-if="roleEditMode">
+                        <label class="matrix-checkbox">
+                          <input
+                            type="checkbox"
+                            :checked="role.permissions.includes(perm.label)"
+                            @change="toggleRolePermission(role.key, perm.label)"
+                          />
+                          <span class="checkbox-custom" :class="{ checked: role.permissions.includes(perm.label) }">✓</span>
+                        </label>
+                      </template>
+                      <template v-else>
+                        <span v-if="role.permissions.includes(perm.label)" class="check-yes">✓</span>
+                        <span v-else class="check-no">—</span>
+                      </template>
                     </td>
                   </tr>
                 </tbody>
@@ -404,6 +432,67 @@
           <div v-if="deleteForm.reason && !deleteForm.file" class="form-hint warning-hint">⚠️ Uploading evidence is recommended for compliance.</div>
         </div>
         <div class="modal-footer"><button class="btn btn-secondary" @click="closeDeleteModal">Cancel</button><button class="btn btn-danger" @click="confirmDeleteStaff">Delete Account</button></div>
+      </div>
+    </div>
+
+    <!-- Add Role Modal -->
+    <div v-if="addRoleModal" class="modal-overlay" @click.self="closeAddRoleModal">
+      <div class="modal-box">
+        <div class="modal-header"><h2 class="modal-title">Add New Role</h2><button class="modal-close" @click="closeAddRoleModal">×</button></div>
+        <div class="modal-body">
+          <div class="form-group"><label class="form-label">Role Name <span class="required">*</span></label><input v-model="addRoleForm.name" type="text" class="form-input" placeholder="e.g. Auditor, Support" /></div>
+          <div class="form-group"><label class="form-label">Icon <span class="label-hint">(emoji)</span></label>
+            <input v-model="addRoleForm.icon" type="text" class="form-input" placeholder="e.g. 🔧" maxlength="2" />
+          </div>
+          <div class="modal-divider"></div>
+          <div class="permissions-section">
+            <div class="permissions-header"><span class="permissions-title">Permissions</span></div>
+            <div class="permissions-grid">
+              <label v-for="perm in allPermissionLabels" :key="perm.key" class="permission-item">
+                <input type="checkbox" v-model="addRoleForm.permissions" :value="perm.label" />
+                <span class="permission-label">{{ perm.label }}</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer"><button class="btn btn-secondary" @click="closeAddRoleModal">Cancel</button><button class="btn btn-primary" @click="confirmAddRole">Add Role</button></div>
+      </div>
+    </div>
+
+    <!-- Edit Role Modal -->
+    <div v-if="editRoleModal" class="modal-overlay" @click.self="closeEditRoleModal">
+      <div class="modal-box">
+        <div class="modal-header"><h2 class="modal-title">Edit Role: {{ editRoleForm.name }}</h2><button class="modal-close" @click="closeEditRoleModal">×</button></div>
+        <div class="modal-body">
+          <div class="form-group"><label class="form-label">Role Name <span class="required">*</span></label><input v-model="editRoleForm.name" type="text" class="form-input" /></div>
+          <div class="form-group"><label class="form-label">Icon <span class="label-hint">(emoji)</span></label>
+            <input v-model="editRoleForm.icon" type="text" class="form-input" placeholder="e.g. 🔧" maxlength="2" />
+          </div>
+          <div class="modal-divider"></div>
+          <div class="permissions-section">
+            <div class="permissions-header">
+              <span class="permissions-title">Permissions</span>
+              <button class="btn-link" @click="toggleAllRolePermissions" type="button">{{ allRolePermsTicked ? 'Untick All' : 'Tick All' }}</button>
+            </div>
+            <div class="permissions-grid">
+              <label v-for="perm in allPermissionLabels" :key="perm.key" class="permission-item">
+                <input type="checkbox" v-model="editRoleForm.permissions" :value="perm.label" />
+                <span class="permission-label">{{ perm.label }}</span>
+              </label>
+            </div>
+          </div>
+          <div class="modal-divider"></div>
+          <div class="delete-warning small-warning">
+            <span class="warning-icon">⚠️</span>
+            <p>Deleting this role will NOT affect existing staff with this role.</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" @click="confirmDeleteRole">🗑️ Delete Role</button>
+          <div style="flex:1"></div>
+          <button class="btn btn-secondary" @click="closeEditRoleModal">Cancel</button>
+          <button class="btn btn-primary" @click="confirmEditRole">Save Changes</button>
+        </div>
       </div>
     </div>
   </div>
@@ -730,6 +819,116 @@ const closePanel = () => {
 }
 
 const exportStaff = () => { alert('Export CSV — coming soon') }
+
+// Role Permissions Management
+const roleEditMode = ref(false)
+const rolesBackup = ref<any[]>([])
+const addRoleModal = ref(false)
+const addRoleForm = ref({ name: '', icon: '👤', permissions: [] as string[] })
+const editRoleModal = ref(false)
+const editRoleForm = ref({ key: '', name: '', icon: '', permissions: [] as string[] })
+
+const toggleRolePermission = (roleKey: string, permLabel: string) => {
+  const role = roles.value.find(r => r.key === roleKey)
+  if (role) {
+    const idx = role.permissions.indexOf(permLabel)
+    if (idx > -1) {
+      role.permissions.splice(idx, 1)
+    } else {
+      role.permissions.push(permLabel)
+    }
+  }
+}
+
+const cancelRoleEdits = () => {
+  roles.value = JSON.parse(JSON.stringify(rolesBackup.value))
+  roleEditMode.value = false
+}
+
+const saveRoleEdits = () => {
+  rolesBackup.value = JSON.parse(JSON.stringify(roles.value))
+  roleEditMode.value = false
+  alert('Role permissions saved successfully!')
+}
+
+const openAddRoleModal = () => {
+  addRoleForm.value = { name: '', icon: '👤', permissions: [] }
+  addRoleModal.value = true
+}
+
+const closeAddRoleModal = () => { addRoleModal.value = false }
+
+const confirmAddRole = () => {
+  if (!addRoleForm.value.name.trim()) {
+    alert('Please enter a role name')
+    return
+  }
+  const newKey = addRoleForm.value.name.toLowerCase().replace(/\s+/g, '_')
+  if (roles.value.some(r => r.key === newKey)) {
+    alert('A role with this name already exists')
+    return
+  }
+  roles.value.push({
+    key: newKey,
+    name: addRoleForm.value.name,
+    icon: addRoleForm.value.icon || '👤',
+    permissions: [...addRoleForm.value.permissions]
+  })
+  rolesBackup.value = JSON.parse(JSON.stringify(roles.value))
+  alert(`Role "${addRoleForm.value.name}" added successfully!`)
+  addRoleModal.value = false
+}
+
+const openEditRoleModal = (role: any) => {
+  editRoleForm.value = {
+    key: role.key,
+    name: role.name,
+    icon: role.icon,
+    permissions: [...role.permissions]
+  }
+  editRoleModal.value = true
+}
+
+const closeEditRoleModal = () => { editRoleModal.value = false }
+
+const allRolePermsTicked = computed(() => {
+  return allPermissionLabels.every(p => editRoleForm.value.permissions.includes(p.label))
+})
+
+const toggleAllRolePermissions = () => {
+  if (allRolePermsTicked.value) {
+    editRoleForm.value.permissions = []
+  } else {
+    editRoleForm.value.permissions = allPermissionLabels.map(p => p.label)
+  }
+}
+
+const confirmEditRole = () => {
+  if (!editRoleForm.value.name.trim()) {
+    alert('Please enter a role name')
+    return
+  }
+  const role = roles.value.find(r => r.key === editRoleForm.value.key)
+  if (role) {
+    role.name = editRoleForm.value.name
+    role.icon = editRoleForm.value.icon || '👤'
+    role.permissions = [...editRoleForm.value.permissions]
+    rolesBackup.value = JSON.parse(JSON.stringify(roles.value))
+    alert(`Role "${role.name}" updated successfully!`)
+  }
+  editRoleModal.value = false
+}
+
+const confirmDeleteRole = () => {
+  if (!confirm(`⚠️ Delete the role "${editRoleForm.value.name}"? Existing staff with this role will not be affected.`)) return
+  roles.value = roles.value.filter(r => r.key !== editRoleForm.value.key)
+  rolesBackup.value = JSON.parse(JSON.stringify(roles.value))
+  alert(`Role "${editRoleForm.value.name}" deleted.`)
+  editRoleModal.value = false
+}
+
+// Initialize roles backup
+rolesBackup.value = JSON.parse(JSON.stringify(roles.value))
 </script>
 
 <style scoped>
@@ -1160,6 +1359,77 @@ const exportStaff = () => { alert('Export CSV — coming soon') }
 .matrix-perm-name { text-align: left !important; font-weight: 500; }
 .check-yes { color: var(--bsp-success); font-weight: 700; font-size: 1rem; }
 .check-no { color: #cbd5e1; }
+
+/* Role Permissions */
+.section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+  gap: 1rem;
+}
+
+.section-actions { display: flex; gap: 0.5rem; align-items: center; }
+
+.btn-edit-role {
+  background: none;
+  border: none;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  opacity: 0.6;
+  transition: all 0.2s;
+}
+
+.btn-edit-role:hover { opacity: 1; background: #e2e8f0; }
+
+/* Matrix Checkbox */
+.matrix-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.matrix-checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.checkbox-custom {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #e2e8f0;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  transition: all 0.2s;
+  color: transparent;
+}
+
+.checkbox-custom.checked {
+  background: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.matrix-checkbox:hover .checkbox-custom {
+  border-color: #10b981;
+}
+
+.role-icon-small { font-size: 0.9rem; margin-right: 0.25rem; }
+
+.matrix-role-header { text-align: center; }
+
+.small-warning { padding: 0.75rem; }
 
 /* Detail Panel */
 .detail-panel-overlay {
