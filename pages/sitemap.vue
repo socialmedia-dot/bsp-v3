@@ -54,16 +54,16 @@
         </ul>
       </div>
 
-      <!-- Employee Portal -->
+      <!-- BSP Command Center -->
       <div class="sitemap-section">
-        <h2>💼 Employee Portal</h2>
+        <h2>🎯 BSP Command Center</h2>
         <ul>
-          <li><span class="status done">✅</span> <NuxtLink to="/employee/dashboard">Employee Dashboard</NuxtLink></li>
+          <li><span class="status done">✅</span> <NuxtLink to="/employee/dashboard">BSP Command Center Dashboard</NuxtLink></li>
           <li><span class="status todo">❌</span> <span class="todo-link">/employee/schools — School Management</span></li>
           <li><span class="status todo">❌</span> <span class="todo-link">/employee/consultants — Consultant Management</span></li>
           <li><span class="status todo">❌</span> <span class="todo-link">/employee/payments — Payment Records</span></li>
           <li><span class="status todo">❌</span> <span class="todo-link">/employee/discounts — Discount Codes</span></li>
-          <li><span class="status todo">❌</span> <span class="todo-link">/employee/settings — Employee Settings</span></li>
+          <li><span class="status todo">❌</span> <span class="todo-link">/employee/settings — Command Center Settings</span></li>
         </ul>
       </div>
 

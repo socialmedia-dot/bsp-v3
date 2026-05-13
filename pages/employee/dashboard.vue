@@ -4,7 +4,7 @@
     <header class="topbar">
       <div class="topbar-left">
         <img src="/img/logo-bsp.jpg" alt="BSP Logo" class="topbar-logo">
-        <h1 class="topbar-title">BSP Admin Dashboard</h1>
+        <h1 class="topbar-title">BSP Command Center</h1>
       </div>
       <div class="topbar-right">
         <span class="user-info">

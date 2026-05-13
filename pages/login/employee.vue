@@ -22,8 +22,8 @@
     <div class="auth-box">
       <a href="/" style="display: block; text-align: center; margin-bottom: 1.5rem;">
         <span style="font-size: 2rem;">🏫</span>
-        <h1 style="font-size: 1.5rem; margin-top: 0.5rem;">BSP Admin Login</h1>
-        <p style="font-size: 0.875rem; color: #64748b; margin-top: 0.25rem;">British School Portal — Staff Portal</p>
+        <h1 style="font-size: 1.5rem; margin-top: 0.5rem;">BSP Operations Portal</h1>
+        <p style="font-size: 0.875rem; color: #64748b; margin-top: 0.25rem;">British School Portal — Staff Operations Login</p>
       </a>
       
       <form @submit.prevent="handleLogin" class="auth-form">
