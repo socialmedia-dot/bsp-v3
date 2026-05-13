@@ -55,10 +55,6 @@
               <span class="nav-icon">🌐</span>
               <span>Website Settings</span>
             </NuxtLink>
-            <NuxtLink to="/BSP/settings/staff" class="nav-item">
-              <span class="nav-icon">👔</span>
-              <span>Staff</span>
-            </NuxtLink>
           </div>
         </nav>
       </aside>

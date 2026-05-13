@@ -92,7 +92,6 @@
           <li><span class="status done">✅</span> <NuxtLink to="/BSP/payments">Payments</NuxtLink></li>
           <li><span class="status done">✅</span> <NuxtLink to="/BSP/settings/fees">Annual Fee Settings</NuxtLink></li>
           <li><span class="status done">✅</span> <NuxtLink to="/BSP/settings/website">Website Settings</NuxtLink></li>
-          <li><span class="status done">✅</span> <NuxtLink to="/BSP/settings/staff">Staff Settings</NuxtLink></li>
         </ul>
       </div>
 
